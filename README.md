@@ -1,4 +1,4 @@
-## Instrucciones
+## Instrucciones.
 
 1. Capturar el H1, mediante un ID, en una variable llamada "titulo". 
 2. Crean una variable "tituloPrincipal" cuyo valor sea "Frutas" y cambiar el contenido del título por el de esta variable.

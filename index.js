@@ -39,7 +39,7 @@ for(fruta of frutas){
 
 // for (const fruta of frutasDulces) {
 //     const card = crearCard(fruta.nombre, fruta.foto, fruta.descripcion);
-//     frutas_dulces.innerHTML += card;
+///     frutas_dulces.innerHTML += card;
 // }
 
 
