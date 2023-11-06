@@ -158,7 +158,7 @@ const frutas = [
     {
         id: 14,
         nombre: 'Granada',
-        foto: 'https://elpoderdelconsumidor.org/wp-content/uploads/2015/09/granada-roja.jpg',
+        foto: 'https://imgs.search.brave.com/TvdweapFRkdaxhit66Gujpunwrj2cxMB66q4GWAPXfQ/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9lY29j/b3Nhcy5jb20vd3At/Y29udGVudC91cGxv/YWRzLzIwMjAvMDYv/Z3JhbmFkYS1mcnV0/YS0xLTEwMjR4Nzkw/LmpwZw',
         colorPrincipal: 'rojo',
         esDulce: true,
         temporada: 'otoño',
