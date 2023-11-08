@@ -1,0 +1,42 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col h-screen ">
+    <header>
+      <nav class="items-center text-xl gap-8 flex justify-end bg-slate-700	 p-3 border-red border-2">
+        <div class="flex mr-auto gap-4 items-center">
+          <img id="logo" class="w-10" src="./assets/carrete-de-pelicula.png" alt="" srcset="">
+          <h1 class=" bg-white text-black  px-2 py-1 rounded">MOVIESTACK</h1>
+      </div>    
+        <a class="text-white border-solid border-2 p-1" href="#">HOME</a>
+        <a class="text-white border-solid border-2 p-1" href="./movies.html">MOVIES</a>
+        <a class="text-white border-solid border-2 p-1" href="#">FAVS</a>
+
+        
+      </nav>
+    </header>
+    <main class="flex-grow bg-slate-900 " >
+        <img class="banner py-2 w-4/5 mx-auto" src="./assets/marvel.jpg" alt="">
+        <p class="text-gray-300 text-2xl p-6  mx-auto text-center">"¡Bienvenidos a nuestra pasión por el cine! En nuestro sitio, explorarás un emocionante mundo de películas que abarcan géneros, décadas y culturas. Desde clásicos atemporales hasta los últimos éxitos de taquilla, estamos aquí para compartir contigo la magia del cine. Descubre reseñas, noticias de la industria, recomendaciones y mucho más. Únete a nosotros en un viaje cinematográfico que celebra la belleza y el poder de las películas. ¿Listo para sumergirte en la pantalla grande?"</p>
+        <div class="div-container flex w-full	justify-around py-20">
+          <img class=" w-1/3" src="./assets/ticket.jpg" alt="" srcset="">
+          <img class="w-1/3" src="./assets/pochoclo_chico.jpg" alt="" srcset="">
+        </div>
+      </main>
+    
+    <footer class="flex gap-20 justify-center text-gray-300	 bg-slate-700 p-3  border-2">
+     <p>MINDHUB</P>
+     <p>COHORT 52</p>
+    </footer>
+
+    <script src="./scripts/data.js"></script>
+    <script src="./scripts/home.js"></script>
+    <script src="./scripts/movies.js"></script>
+  </body>
+</html> 

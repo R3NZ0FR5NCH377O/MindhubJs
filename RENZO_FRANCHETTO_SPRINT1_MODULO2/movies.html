@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link  rel="shortcut icon" href="./assets/Recursos Moviestack/Moviestack_favicon.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col h-screen">
+    <header>
+      <nav class="items-center text-xl gap-8 flex justify-end bg-slate-700 p-3 border-red border-2">
+        <div class="flex mr-auto gap-4 items-center">
+          <img id="logo" class="w-10" src="./assets/carrete-de-pelicula.png" alt="" srcset="">
+          <h1 class=" bg-white text-black  px-2 py-1 rounded">MOVIESTACK</h1>
+      </div>
+        <a class="text-white border-solid border-2 p-1" href="./home.html">HOME</a>
+        <a class="text-white border-solid border-2 p-1" href="./movies.html">MOVIES</a>
+        <a class="text-white border-solid border-2 p-1" href="#">FAVS</a>
+
+      </nav>
+    </header>
+    
+    <main class="flex-grow bg-slate-900 flex flex-col-reverse">
+      <div class="pagination flex justify-center items-center mb-4">
+        <button id="prevPage" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4" disabled>Anterior</button>
+        <span id="pageIndicator" class="text-white mx-4">Página 1 de 1</span>
+        <button id="nextPage" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">Siguiente</button>
+      </div>
+      <div id="main-content" class="flex  justify-evenly items-center  flex-grow">
+       
+      </div>
+    </main>
+    
+    <footer class="flex gap-20 justify-center text-gray-300 bg-slate-700 p-3 border-2">
+      <p>MINDHUB</p>
+      <p>COHORT 52</p>
+    </footer>
+
+    <script src="./scripts/data.js"></script>
+    <script src="./scripts/movies.js"></script>
+  </body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
