@@ -21,10 +21,10 @@ parrafoFooter.textContent = "Renzo Franchetto COHORT 52";
 
 function crearCard(nombre, foto, descripcion) {
   let cardHTML = `
-      <div class="card flex flex-col items-center border-2 ">
-        <img class="card-image w-1/4 h-1/4" src="${foto}" alt="${nombre}">
+      <div class="card flex flex-col w-1/3  items-center border-2 ">
+        <img class="card-image w-3/4 h-3/4 py-3" src="${foto}" alt="${nombre}">
         <h3 class="card-title">${nombre}</h3>
-        <p class="card-description">${descripcion}</p>
+        <p class="card-description text-2xl">${descripcion}</p>
       </div>
     `;
   return cardHTML;
