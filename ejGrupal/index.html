@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Documento</title>
+  </head>
+  <body class="flex flex-col md:flex-row-reverse p-6 bg-black">
+    <section
+      class="h-screen md:w-1/3 bg-red-600 flex justify-center items-center text-2xl"
+    >
+      <form
+        id="miFormulario"
+        class="bg-red-600 h-full w-full md:w-2/3 flex flex-col justify-around pb-24 items-center"
+      >
+        <label
+          class="flex flex-col justify-center items-center gap-3"
+          for="miCampoTexto"
+          >Ingrese texto
+          <input
+            class="w-full rounded-md p-4"
+            type="text"
+            name="campoTexto"
+            id="miCampoTexto"
+            placeholder="Ingrese texto"
+        /></label>
+        <label
+          class="flex flex-col justify-center items-center gap-3"
+          for="miSeleccionColor"
+          >Seleccione un color para la nota:
+          <input type="color" name="seleccionColor" id="miSeleccionColor"
+        /></label>
+        <label>Seleccione fuente:</label>
+        <label class="text-2xl italic" for="miFuenteGraffiti"
+          ><input
+            class="scale-150"
+            type="radio"
+            name="tipoFuente"
+            id="miFuenteGraffiti"
+          />
+          Graffiti</label
+        >
+        <label class="text-2xl" for="miFuentePoster"
+          ><input
+            type="radio"
+            name="tipoFuente"
+            id="miFuentePoster"
+            class="scale-150"
+          />
+          Poster</label
+        >
+        <input
+          id="miBoton"
+          class="text-center border-l-2 border-b-4 border-t border-r border-black bg-white w-48 text-left text-3xl font-bold"
+          type="submit"
+          value="Crear"
+        />
+      </form>
+    </section>
+    <section
+      class="flex justify-center items-center bg-orange-00 h-screen md:w-2/3"
+    >
+      <div
+        id="miMuro"
+        class=" w-full h-full md:w-12/12 md:h-6/6 bg-blue-400 flex gap-5 flex-wrap justify-around"
+      ></div>
+    </section>
+    <script src="./tailwind.config.js"></script>
+    <script src="./home.js"></script>
+  </body>
+</html>
