@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="shortcut icon" href="./assets/Recursos Moviestack/Moviestack_favicon.png" type="image/x-icon">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex flex-col h-screen">
+    <header>
+        <nav class="items-center text-xl gap-8 flex flex-col md:flex-row justify-end bg-slate-700 p-3 border-red border-2">
+            <div class="flex md:mr-auto gap-4 items-center">
+                <img id="logo" class="w-10" src="./assets/carrete-de-pelicula.png" alt="" srcset="">
+                <h1 class="bg-white text-black  px-2 py-1 rounded">MOVIESTACK</h1>
+            </div>
+            <a class="text-white border-solid border-2 p-1" href="./home.html">INICIO</a>
+            <a class="text-white border-solid border-2 p-1" href="./movies.html">PELÍCULAS</a>
+            <a class="text-white border-solid border-2 p-1" href="#">FAVS</a>
+        </nav>
+    </header>
+    <main class="flex-grow bg-slate-900 flex flex-col md:flex-row">
+        <div id="movieDetailsContainer" class="flex flex-col items-center w-full md:w-1/2 p-4">
+            <img class="w-3/4" alt="" srcset="" id="movieImage">
+            <div id="movieDetailsTable1" class="text-white text-lg pt-10 "></div>
+        </div>
+        <div id="movieContentContainer" class="flex flex-col w-full md:w-1/2 p-4">
+            <div id="movieDetails" class="text-white">
+                <h1 id="movieTitle" class="text-4xl font-bold pb-5"></h1>
+                <h2 id="movieTagline" class="text-xl pb-5"></h2>
+                <h3 id="movieGenres" class="pb-3"></h3>
+            </div>
+            <div id="movieDescription" class="text-white w-full pb-20"></div>
+            <div id="movieDetailsTable2" class="text-white flex"></div>
+        </div>
+    </main>
+
+    <footer class="flex flex-row gap-20 justify-center text-gray-300 bg-slate-700 p-3  border-2">
+        <p>MINDHUB</p>
+        <p>COHORTE 52</p>
+    </footer>
+    <script src="./scripts/data.js"></script>
+    <script type="module" src="./scripts/detalle.js"></script>
+    <script type="module" src="./scripts/funciones.js"></script>
+</body>
+
+</html>
