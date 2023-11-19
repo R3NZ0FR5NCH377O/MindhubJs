@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const apiUrl = 'https://moviestack.onrender.com/api/movies';
   const apiKey = '0ff70d54-dc0b-4262-9c3d-776cb0f34dbd';
   let moviesData;
-  let movies = [];
+  let movies;
   let favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies')) || [];
   const tarjetasPorPagina = 4;
   let paginaActual = 1;
@@ -10,14 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
   let filtroNombre = "";
 
   function crearTarjeta(foto, nombre, descripcion, id, isFavorite) {
+    const heartIconColor = isFavorite ? 'text-red-500' : 'text-gray-500';
+    const heartIconSize = isFavorite ? 'h-8 w-8' : 'h-10 w-10';
+
     const tarjetaHTML = `
-        <div class="border-2 w-1/5 h-96 p-2 flex flex-col">
-            <img class="w-72 mx-auto py-4" src="https://moviestack.onrender.com/static/${foto}" alt="">
+        <div class="border-2 w-1/5 h-96 p-2 flex flex-col relative">
+            <div class="relative">
+                <img class="w-72 mx-auto py-4" src="https://moviestack.onrender.com/static/${foto}" alt="">
+                <div class="favorite-button p-2 absolute top-2 right-2 z-10 cursor-pointer" data-movie-id="${id}" data-is-favorite="${isFavorite}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" class="${heartIconColor} ${heartIconSize} rounded-full">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C16.09 3.81 17.76 3 19.5 3 22.58 3 26 6.42 26 9.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </div>
+            </div>
             <h3 class="text-white py-2 px-2">${nombre}</h3>
             <p class="text-white py-2 px-2 line-clamp-5">${descripcion}</p>
             <div class="flex justify-between">
-              <button class="favorite-button border p-1 text-fuchsia-600" data-movie-id="${id}">${isFavorite ? 'Quitar de Favoritos' : 'Añadir a Favoritos'}</button>
-              <a class="text-white border-solid border-2 w-1/3" href="./detalle.html?id=${id}">Ir al detalle</a>
+                <a class="text-white border-solid border-2 w-1/3" href="./detalle.html?id=${id}">Ir al detalle</a>
             </div>
         </div>`;
     return tarjetaHTML;
@@ -38,7 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
       contenedor.appendChild(mensaje);
     } else {
       peliculasAMostrar.forEach((pelicula, index) => {
-        const tarjeta = crearTarjeta(pelicula.image, pelicula.title, pelicula.overview, pelicula.id, pelicula.isFavorite);
+        const isFavorite = favoriteMovies.includes(pelicula.id);
+        const tarjeta = crearTarjeta(pelicula.image, pelicula.title, pelicula.overview, pelicula.id, isFavorite);
         contenedor.innerHTML += tarjeta;
       });
     }
@@ -54,49 +64,23 @@ document.addEventListener("DOMContentLoaded", function () {
     botonAnterior.disabled = pagina <= 1;
     botonSiguiente.disabled = pagina >= totalPaginas;
 
+    // Manejar clics en corazones de favoritos
     const favoriteButtons = document.querySelectorAll('.favorite-button');
     favoriteButtons.forEach(button => {
-      button.addEventListener('click', function () {
+      button.addEventListener('click', function (event) {
+        event.stopPropagation(); // Evitar la propagación del clic al contenedor
         const movieId = this.getAttribute('data-movie-id');
-        toggleFavorite(movieId);
+        const isFavorite = this.getAttribute('data-is-favorite') === 'true';
+
+        if (isFavorite) {
+          favoriteMovies = favoriteMovies.filter(id => id !== movieId);
+        } else {
+          favoriteMovies.push(movieId);
+        }
+
+        localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
+        updateFavoritesButton(movieId);
       });
-    });
-  }
-
-  function toggleFavorite(movieId) {
-    const index = movies.findIndex(movie => movie.id === movieId);
-    if (index !== -1) {
-      movies[index].isFavorite = !movies[index].isFavorite;
-
-      if (movies[index].isFavorite) {
-        addToFavorites(movieId);
-      } else {
-        removeFromFavorites(movieId);
-      }
-
-      updateFavoritesButton();
-    }
-  }
-
-  function addToFavorites(movieId) {
-    if (!favoriteMovies.includes(movieId)) {
-      favoriteMovies.push(movieId);
-      localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
-    }
-  }
-
-  function removeFromFavorites(movieId) {
-    favoriteMovies = favoriteMovies.filter(id => id !== movieId);
-    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
-  }
-
-  function updateFavoritesButton() {
-    const favoriteButtons = document.querySelectorAll('.favorite-button');
-    favoriteButtons.forEach(button => {
-      const buttonMovieId = button.getAttribute('data-movie-id');
-      const isFavorite = favoriteMovies.includes(buttonMovieId);
-
-      button.textContent = isFavorite ? 'Quitar de Favoritos' : 'Añadir a Favoritos';
     });
   }
 
@@ -131,11 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const botonAnterior = document.getElementById("prevPage");
   const botonSiguiente = document.getElementById("nextPage");
 
+  // Agrega el event listener después de cargar el contenido
   selectCategoria.addEventListener("change", () => {
     filtroCategoria = selectCategoria.value;
     aplicarFiltros();
   });
 
+  // Establecer "todos" como el valor por defecto del select
   selectCategoria.value = "todos";
 
   inputBusqueda.addEventListener("input", () => {
@@ -151,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   botonSiguiente.addEventListener("click", () => {
-    const categoriaSeleccionada = filtroCategoria;
+    const categoriaSeleccionada = selectCategoria.value;
     const terminoBusqueda = filtroNombre;
 
     let peliculasFiltradas = movies;
@@ -167,10 +153,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalPaginas = Math.ceil(peliculasFiltradas.length / tarjetasPorPagina);
     if (paginaActual < totalPaginas) {
       paginaActual++;
-      aplicarFiltros();
     }
+
+    aplicarFiltros();
   });
 
+  // Obtener datos de la API
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -182,12 +170,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(response => response.json())
     .then(data => {
       moviesData = data;
-      movies = moviesData.movies.map(movie => ({
-        ...movie,
-        isFavorite: favoriteMovies.includes(movie.id),
-      }));
+      movies = moviesData.movies;
 
-      const categoriasUnicas = obtenerCategoriasUnicas(movies);
+      mostrarTarjetasEnPagina(paginaActual, movies);
+
+      const categoriasUnicas = obtenerCategoriasUnicas();
       selectCategoria.innerHTML = "";
       categoriasUnicas.forEach((categoria) => {
         const option = document.createElement("option");
@@ -196,18 +183,42 @@ document.addEventListener("DOMContentLoaded", function () {
         selectCategoria.appendChild(option);
       });
 
-      mostrarTarjetasEnPagina(paginaActual, movies);
-      updateFavoritesButton();
+      const favoriteButtons = document.querySelectorAll('.favorite-button');
+      favoriteButtons.forEach(button => {
+        const movieId = button.getAttribute('data-movie-id');
+        updateFavoritesButton(movieId);
+      });
     })
     .catch(error => console.error('Error al obtener datos de la API:', error));
-});
 
-function obtenerCategoriasUnicas(peliculas) {
-  const categorias = new Set();
-  peliculas.forEach((pelicula) => {
-    pelicula.genres.forEach((categoria) => {
-      categorias.add(categoria);
+  function obtenerCategoriasUnicas() {
+    const categorias = new Set();
+    movies.forEach((pelicula) => {
+      pelicula.genres.forEach((categoria) => {
+        categorias.add(categoria);
+      });
     });
-  });
-  return [...categorias, "todos"];
-}
+    return [ "todos",...categorias];
+  }
+
+  function updateFavoritesButton(movieId) {
+    const favoriteButtons = document.querySelectorAll('.favorite-button');
+    favoriteButtons.forEach(button => {
+      const buttonMovieId = button.getAttribute('data-movie-id');
+      const isFavorite = favoriteMovies.includes(buttonMovieId);
+      if (isFavorite) {
+        button.setAttribute('data-is-favorite', 'true');
+        button.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" class="text-red-500 h-8 w-8 rounded-full">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C16.09 3.81 17.76 3 19.5 3 22.58 3 26 6.42 26 9.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>`;
+      } else {
+        button.setAttribute('data-is-favorite', 'false');
+        button.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-10 w-10 rounded-full">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C16.09 3.81 17.76 3 19.5 3 22.58 3 26 6.42 26 9.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>`;
+      }
+    });
+  }
+});
