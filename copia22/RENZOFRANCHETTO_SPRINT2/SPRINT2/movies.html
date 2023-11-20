@@ -29,11 +29,11 @@
             <img class="banner py-2 w-4/5 mx-auto" src="./assets/marvel.jpg" alt="">
         </div>
         <div class="filtro md:flex-row flex md:justify-center p-10 md:gap-10 flex-col">
-            <label class="text-red-300 self-center" for="categoria">Selecciona una categoría:</label>
+            <label class="text-red-300 self-center" for="categoria">Select Generes:</label>
             <select id="categoria" name="categoria" class="text-red-500 my-4">
                 <option value="todos">Todos</option>
             </select>
-            <input class="h-1/2 self-center" type="search" placeholder="busca por nombre...">
+            <input class="h-1/2 self-center" type="search" placeholder="Search by name...">
         </div>
         <div class="flex-grow bg-slate-900 flex flex-col-reverse">
             <div>
@@ -41,10 +41,10 @@
             </div>
             <div class="pagination flex justify-center items-center mb-4">
                 <button id="prevPage"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4" disabled>Anterior</button>
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4" disabled>Prev</button>
                 <span id="pageIndicator" class="text-white mx-4">Página 1 de 1</span>
                 <button id="nextPage"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">Siguiente</button>
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">Next</button>
             </div>
             <div id="main-content" class="flex justify-evenly items-center flex-grow">
             </div>

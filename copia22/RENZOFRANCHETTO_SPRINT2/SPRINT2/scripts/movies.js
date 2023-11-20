@@ -10,15 +10,15 @@ document.addEventListener("DOMContentLoaded", function () {
   let filtroNombre = "";
 
   function crearTarjeta(foto, nombre, descripcion, id, isFavorite) {
-    const heartIconColor = isFavorite ? 'text-red-500' : 'text-gray-500';
-    const heartIconSize = isFavorite ? 'h-8 w-8' : 'h-10 w-10';
+    const corazonColor = isFavorite ? 'text-red-500' : 'text-gray-500';
+    const corazonTamanio = isFavorite ? 'h-8 w-8' : 'h-10 w-10';
 
     const tarjetaHTML = `
         <div class="border-2 w-1/5 h-96 p-2 flex flex-col relative">
             <div class="relative">
                 <img class="w-72 mx-auto py-4" src="https://moviestack.onrender.com/static/${foto}" alt="">
                 <div class="favorite-button p-2 absolute top-2 right-2 z-10 cursor-pointer" data-movie-id="${id}" data-is-favorite="${isFavorite}">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" class="${heartIconColor} ${heartIconSize} rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" class="${corazonColor} ${corazonTamanio} rounded-full">
                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C16.09 3.81 17.76 3 19.5 3 22.58 3 26 6.42 26 9.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
                 </div>
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <h3 class="text-white py-2 px-2">${nombre}</h3>
             <p class="text-white py-2 px-2 line-clamp-5">${descripcion}</p>
             <div class="flex justify-between">
-                <a class="text-white border-solid border-2 w-1/3" href="./detalle.html?id=${id}">Ir al detalle</a>
+                <a class="text-white border-solid border-2 w-1/3" href="./detalle.html?id=${id}">Ir al Detalle</a>
             </div>
         </div>`;
     return tarjetaHTML;
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
-        updateFavoritesButton(movieId);
+        actualizarBotonesFavoritos(movieId);
       });
     });
   }
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const favoriteButtons = document.querySelectorAll('.favorite-button');
       favoriteButtons.forEach(button => {
         const movieId = button.getAttribute('data-movie-id');
-        updateFavoritesButton(movieId);
+        actualizarBotonesFavoritos(movieId);
       });
     })
     .catch(error => console.error('Error al obtener datos de la API:', error));
@@ -198,10 +198,10 @@ document.addEventListener("DOMContentLoaded", function () {
         categorias.add(categoria);
       });
     });
-    return [ "todos",...categorias];
+    return ["todos", ...categorias];
   }
 
-  function updateFavoritesButton(movieId) {
+  function actualizarBotonesFavoritos(movieId) {
     const favoriteButtons = document.querySelectorAll('.favorite-button');
     favoriteButtons.forEach(button => {
       const buttonMovieId = button.getAttribute('data-movie-id');

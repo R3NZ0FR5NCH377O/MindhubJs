@@ -45,10 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabla = document.createElement("table");
     tabla.classList.add("text-white", "border", "border-white", "divide-y", "divide-white");
 
-    agregarFila(tabla, "Fecha de lanzamiento", formatDate(pelicula.release_date));
-    agregarFila(tabla, "Duración", `${pelicula.runtime} minutos`);
-    agregarFila(tabla, "Estatus", pelicula.status);
-    agregarFila(tabla, "Idioma original", pelicula.original_language);
+    agregarFila(tabla, "release date", formatDate(pelicula.release_date));
+    agregarFila(tabla, "Duratión", `${pelicula.runtime} minutos`);
+    agregarFila(tabla, "Status", pelicula.status);
+    agregarFila(tabla, "Language", pelicula.original_language);
 
     return tabla;
   }
@@ -57,9 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabla = document.createElement("table");
     tabla.classList.add("text-white", "border", "border-white", "divide-y", "divide-white");
 
-    agregarFila(tabla, "Calificación", pelicula.vote_average);
-    agregarFila(tabla, "Presupuesto", `$${pelicula.budget.toLocaleString()}`);
-    agregarFila(tabla, "Ingresos", `$${pelicula.revenue.toLocaleString()}`);
+    agregarFila(tabla, "Qualificatión", pelicula.vote_average);
+    agregarFila(tabla, "Budget", `$${pelicula.budget.toLocaleString()}`);
+    agregarFila(tabla, "Revenue", `$${pelicula.revenue.toLocaleString()}`);
 
     return tabla;
   }
