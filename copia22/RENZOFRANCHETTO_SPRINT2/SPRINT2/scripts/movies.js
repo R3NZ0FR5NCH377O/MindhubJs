@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let moviesData;
   let movies;
   let favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies')) || [];
+  console.log(favoriteMovies )
   const tarjetasPorPagina = 4;
   let paginaActual = 1;
   let filtroCategoria = "todos";
@@ -11,14 +12,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function crearTarjeta(foto, nombre, descripcion, id, isFavorite) {
     const corazonColor = isFavorite ? 'text-red-500' : 'text-gray-500';
-    const corazonTamanio = isFavorite ? 'h-8 w-8' : 'h-10 w-10';
+    const corazonTamaño = isFavorite ? 'h-8 w-8' : 'h-10 w-10';
 
     const tarjetaHTML = `
         <div class="border-2 w-1/5 h-96 p-2 flex flex-col relative">
             <div class="relative">
                 <img class="w-72 mx-auto py-4" src="https://moviestack.onrender.com/static/${foto}" alt="">
                 <div class="favorite-button p-2 absolute top-2 right-2 z-10 cursor-pointer" data-movie-id="${id}" data-is-favorite="${isFavorite}">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" class="${corazonColor} ${corazonTamanio} rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" class="${corazonColor} ${corazonTamaño} rounded-full">
                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C16.09 3.81 17.76 3 19.5 3 22.58 3 26 6.42 26 9.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
                 </div>
@@ -48,15 +49,15 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       peliculasAMostrar.forEach((pelicula, index) => {
         const isFavorite = favoriteMovies.includes(pelicula.id);
+        console.log(isFavorite)
         const tarjeta = crearTarjeta(pelicula.image, pelicula.title, pelicula.overview, pelicula.id, isFavorite);
         contenedor.innerHTML += tarjeta;
       });
     }
-
     const totalPeliculas = peliculasParaMostrar.length;
     const totalPaginas = Math.ceil(totalPeliculas / tarjetasPorPagina);
     const indicadorPagina = document.getElementById("pageIndicator");
-    indicadorPagina.textContent = `Página ${pagina} de ${totalPaginas}`;
+    indicadorPagina.textContent = `Página ${pagina} de ${totalPaginas}`
 
     const botonAnterior = document.getElementById("prevPage");
     const botonSiguiente = document.getElementById("nextPage");
@@ -64,13 +65,13 @@ document.addEventListener("DOMContentLoaded", function () {
     botonAnterior.disabled = pagina <= 1;
     botonSiguiente.disabled = pagina >= totalPaginas;
 
-    // Manejar clics en corazones de favoritos
-    const favoriteButtons = document.querySelectorAll('.favorite-button');
+    // Pilotear clicks en corazones 
+    const favoriteButtons = document.querySelectorAll('.favorite-button')
     favoriteButtons.forEach(button => {
       button.addEventListener('click', function (event) {
-        event.stopPropagation(); // Evitar la propagación del clic al contenedor
-        const movieId = this.getAttribute('data-movie-id');
-        const isFavorite = this.getAttribute('data-is-favorite') === 'true';
+        
+        const movieId = this.getAttribute('data-movie-id')
+        const isFavorite = this.getAttribute('data-is-favorite') === 'true'
 
         if (isFavorite) {
           favoriteMovies = favoriteMovies.filter(id => id !== movieId);
@@ -78,23 +79,23 @@ document.addEventListener("DOMContentLoaded", function () {
           favoriteMovies.push(movieId);
         }
 
-        localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
+        localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies))
         actualizarBotonesFavoritos(movieId);
       });
     });
   }
 
   function aplicarFiltros() {
-    const terminoBusqueda = filtroNombre.trim().toLowerCase();
+    const terminoBusqueda = filtroNombre.trim().toLowerCase()
 
     let peliculasFiltradas = movies;
 
     if (filtroCategoria !== "todos") {
-      peliculasFiltradas = filtrarPeliculasPorCategoria(filtroCategoria, movies);
+      peliculasFiltradas = filtrarPeliculasPorCategoria(filtroCategoria, movies)
     }
 
     if (terminoBusqueda !== "") {
-      peliculasFiltradas = filtrarPeliculasPorTerminoBusqueda(terminoBusqueda, peliculasFiltradas);
+      peliculasFiltradas = filtrarPeliculasPorTerminoBusqueda(terminoBusqueda, peliculasFiltradas)
     }
 
     mostrarTarjetasEnPagina(paginaActual, peliculasFiltradas);
@@ -115,14 +116,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const botonAnterior = document.getElementById("prevPage");
   const botonSiguiente = document.getElementById("nextPage");
 
-  // Agrega el event listener después de cargar el contenido
   selectCategoria.addEventListener("change", () => {
     filtroCategoria = selectCategoria.value;
     aplicarFiltros();
   });
 
-  // Establecer "todos" como el valor por defecto del select
-  selectCategoria.value = "todos";
+  // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------selectCategoria.value = "todos";
 
   inputBusqueda.addEventListener("input", () => {
     filtroNombre = inputBusqueda.value;
@@ -130,10 +129,24 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   botonAnterior.addEventListener("click", () => {
+    const categoriaSeleccionada = selectCategoria.value;
+    const terminoBusqueda = filtroNombre;
+
+    let peliculasFiltradas = movies;
+
+    if (categoriaSeleccionada !== "todos") {
+      peliculasFiltradas = filtrarPeliculasPorCategoria(categoriaSeleccionada, movies);
+    }
+
+    if (terminoBusqueda !== "") {
+      peliculasFiltradas = filtrarPeliculasPorTerminoBusqueda(terminoBusqueda, peliculasFiltradas);
+    }
+
     if (paginaActual > 1) {
       paginaActual--;
-      aplicarFiltros();
     }
+
+    aplicarFiltros();
   });
 
   botonSiguiente.addEventListener("click", () => {
@@ -158,7 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
     aplicarFiltros();
   });
 
-  // Obtener datos de la API
   const requestOptions = {
     method: 'GET',
     headers: {
